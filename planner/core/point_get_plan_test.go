@@ -475,6 +475,10 @@ func (s *testPointGetSuite) TestSelectInMultiColumns(c *C) {
 	_, err = tk.Exec("select * from t2 where (a, b, c) in ((1, 1), (2, 2, 2));")
 	c.Assert(err, NotNil)
 	c.Assert(err.Error(), Equals, "[expression:1241]Operand should contain 3 column(s)")
+
+	_, err = tk.Exec("select * from t2 where (a, b, c) in (1, 1, 1);")
+	c.Assert(err, NotNil)
+	c.Assert(err.Error(), Equals, "[expression:1241]Operand should contain 3 column(s)")
 }
 
 func (s *testPointGetSuite) TestUpdateWithTableReadLockWillFail(c *C) {
